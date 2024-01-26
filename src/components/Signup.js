@@ -13,7 +13,6 @@ const Signup = () => {
     <>
       <div
         style={{
-          height: "100vh",
           marginTop: 0,
           backgroundImage:
             'url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQytd7QD01XuURJ8X_DF_Rf7_54WGz9VZZBaKTOKluBdfZpp7kVNcGrczoHOEkaK5_F9JE&usqp=CAU")',
@@ -74,7 +73,12 @@ const Signup = () => {
             <Form.Label style={{ color: "white" }}>
               Enter your Phone Number
             </Form.Label>
-            <Form.Control type="number" placeholder="XXXXXXXXXX" />
+            <Form.Control
+              type="number"
+              
+              size="4"
+              placeholder="XXXXXXXXXX"
+            />
           </Form.Group>
           <Form.Group
             style={{ color: "white" }}
@@ -83,8 +87,14 @@ const Signup = () => {
           >
             <Form.Check type="checkbox" label="Are you under 18?" />
           </Form.Group>
-          <Button variant="success">Register</Button>{" "}
-          <Button onClick={() => navigate("/login")} variant="outline-warning">
+          <Button style={{ marginBottom: "50px" }} variant="success">
+            Register
+          </Button>{" "}
+          <Button
+            onClick={() => navigate("/login")}
+            style={{ marginBottom: "50px" }}
+            variant="outline-warning"
+          >
             Already Registered
           </Button>{" "}
         </Form>
