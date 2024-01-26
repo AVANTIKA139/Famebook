@@ -1,9 +1,10 @@
 import React from "react";
+import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
 import Signup from "./components/Signup";
-import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
+
 import NotFound from "./components/NotFound";
 
 const App = () => {
