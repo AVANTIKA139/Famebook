@@ -64,6 +64,15 @@ const Home = () => {
         >
           Let's START
         </button>
+
+        {/* <button
+          style={{ marginLeft: "800px", marginBottom: "40px" }}
+          onClick={() => navigate("/signup")}
+          class="button-85"
+          role="button"
+        >
+          Let's START
+        </button> */}
       </div>
     </>
   );

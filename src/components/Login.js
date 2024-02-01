@@ -1,14 +1,72 @@
 import React from "react";
+import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 import Col from "react-bootstrap/Col";
 
 import Row from "react-bootstrap/Row";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [isOtpSent, setisOtpSent] = useState(false);
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
+  const [otp, setotp] = useState(null);
+  const handleLogin = async () => {
+    try {
+      if (email.trim() === "") return toast.warning("Please enter your email");
+      if (password.trim() === "")
+        return toast.warning("Please enter your password");
+      const response = await axios.post("/login", {
+        useremail: email,
+        userpassword: password,
+      });
+      if (response.data.success) {
+        toast.success(response.data.message);
+        setisOtpSent(true);
+      }
+    } catch (error) {
+      console.log(error);
+      if (
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.error
+      ) {
+        toast.error(error.response.data.error);
+      }
+    }
+  };
+  const handleOtpVerify = async () => {
+    try {
+      if (email.trim() === "") return toast.warning("Please enter your email");
+      if (password.trim() === "")
+        return toast.warning("Please enter your password");
+      const response = await axios.post("/mfaverify", {
+        useremail: email,
+        userpassword: password,
+        code: otp,
+      });
+      if (response.data.success) {
+        toast.success("Welcome to Famebook!");
+        navigate("/profile");
+      }
+    } catch (error) {
+      console.log(error);
+      if (
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.error
+      ) {
+        toast.error(error.response.data.error);
+      }
+    }
+  };
   return (
     <>
       <div
@@ -49,6 +107,9 @@ const Login = () => {
               }}
               column
               sm={2}
+              value={email}
+              onChange={(e) => setemail(e.target.value)}
+              type="email"
             >
               Email
             </Form.Label>
@@ -67,6 +128,9 @@ const Login = () => {
                 marginBottom: "35px",
                 fontSize: "34px",
               }}
+              value={password}
+              onChange={(e) => setpassword(e.target.value)}
+              type="password"
               column
               sm={2}
             >
@@ -92,17 +156,47 @@ const Login = () => {
               />
             </Col>
           </Form.Group>
+          {isOtpSent ? (
+            <>
+              <div>
+                <label>Enter OTP sent on your phone number</label>
+                <input
+                  value={otp}
+                  onChange={(e) => setotp(e.target.value)}
+                  type="number"
+                />
+              </div>
+            </>
+          ) : (
+            <></>
+          )}
+
           <Form.Group as={Row} className="mb-3">
             <Col sm={{ span: 10, offset: 2 }}>
               <Button
-                style={{ marginBottom: "120px", fontSize: "25px" }}
-                type="submit"
+                style={{
+                  marginBottom: "120px",
+                  fontSize: "25px",
+                  cursor: "pointer",
+                }}
+                type="button"
+                onClick={() => {
+                  if (isOtpSent) {
+                    handleOtpVerify();
+                  } else {
+                    handleLogin();
+                  }
+                }}
               >
-                Sign in
+                Login
               </Button>
               <Button
                 onClick={() => navigate("/signup")}
-                style={{ marginBottom: "120px" }}
+                style={{
+                  marginBottom: "120px",
+                  cursor: "pointer",
+                  color: "violet",
+                }}
                 variant="outline-primary"
               >
                 New User

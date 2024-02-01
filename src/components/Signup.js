@@ -1,16 +1,60 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import { useNavigate } from "react-router-dom";
 import CloseButton from "react-bootstrap/CloseButton";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const [name, setname] = useState("");
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
+  const [date, setdate] = useState("");
+  const [number, setnumber] = useState("");
+  const [isUnder18, setisUnder18] = useState(false);
+  const handleRegister = async () => {
+    try {
+      if (name.trim() === "") return toast.warning("Please enter your name");
+      if (password.trim() === "")
+        return toast.warning("Please enter your password");
+      if (email.trim() === "") return toast.warning("Please enter your email");
+      if (date.trim() === "") return toast.warning("Please enter your date");
+
+      if (!number) return toast.warning("Please enter your number");
+      const response = await axios.post("/signup", {
+        email: email,
+        password: password,
+        username: name,
+        dob: date,
+        phonenumber: number,
+        isUnder18: isUnder18,
+      });
+      console.log(response);
+      if (response.data.success) {
+        toast.success("Successfully Registerd");
+        navigate("/login");
+      }
+    } catch (error) {
+      console.log(error);
+      if (
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.error
+      ) {
+        toast.error(error.response.data.error);
+      }
+    }
+  };
 
   return (
     <>
+      <ToastContainer />
       <div
         style={{
           marginTop: 0,
@@ -45,14 +89,24 @@ const Signup = () => {
               <Form.Label style={{ color: "whitesmoke" }}>
                 Enter your Name
               </Form.Label>
-              <Form.Control type="text" placeholder="Enter name" />
+              <Form.Control
+                value={name}
+                onChange={(e) => setname(e.target.value)}
+                type="text"
+                placeholder="Enter name"
+              />
             </Form.Group>
 
             <Form.Group as={Col} controlId="formGridEmail">
               <Form.Label style={{ color: "whitesmoke" }}>
                 Enter your Email
               </Form.Label>
-              <Form.Control type="Email" placeholder="Enter Email" />
+              <Form.Control
+                value={email}
+                onChange={(e) => setemail(e.target.value)}
+                type="Email"
+                placeholder="Enter Email"
+              />
             </Form.Group>
 
             <Form.Group as={Col} controlId="formGridPassword">
@@ -60,22 +114,32 @@ const Signup = () => {
                 {" "}
                 Create your Password
               </Form.Label>
-              <Form.Control type="password" placeholder="Password" />
+              <Form.Control
+                value={password}
+                onChange={(e) => setpassword(e.target.value)}
+                type="password"
+                placeholder="Password"
+              />
             </Form.Group>
           </Row>
           <Form.Group className="mb-3" controlId="formGridDateofBirth">
             <Form.Label style={{ color: "white" }}>
               Enter your Date of Birth
             </Form.Label>
-            <Form.Control type="date" />
+            <Form.Control
+              value={date}
+              onChange={(e) => setdate(e.target.value)}
+              type="date"
+            />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formGridPhoneNumber">
             <Form.Label style={{ color: "white" }}>
               Enter your Phone Number
             </Form.Label>
             <Form.Control
+              value={number}
+              onChange={(e) => setnumber(e.target.value)}
               type="number"
-              
               size="4"
               placeholder="XXXXXXXXXX"
             />
@@ -85,11 +149,27 @@ const Signup = () => {
             className="mb-3"
             id="formGridCheckbox"
           >
-            <Form.Check type="checkbox" label="Are you under 18?" />
+            <Form.Check
+              checked={isUnder18}
+              onChange={(e) => setisUnder18(e.target.checked)}
+              type="checkbox"
+              label="Are you under 18?"
+            />
           </Form.Group>
-          <Button style={{ marginBottom: "50px" }} variant="success">
-            Register
+          <Button
+            onClick={() => handleRegister()}
+            style={{ marginBottom: "50px" }}
+            variant="success"
+          >
+            Sign In
           </Button>{" "}
+          {/* <button
+            
+            class="button-40"
+            type="button"
+          >
+            <span class="text">Sign in</span>
+          </button> */}
           <Button
             onClick={() => navigate("/login")}
             style={{ marginBottom: "50px" }}
