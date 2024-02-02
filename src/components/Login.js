@@ -12,10 +12,10 @@ import { useState } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [isOtpSent, setisOtpSent] = useState(false);
+  // const [isOtpSent, setisOtpSent] = useState(false);
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
-  const [otp, setotp] = useState(null);
+  // const [otp, setotp] = useState(null);
   const handleLogin = async () => {
     try {
       if (email.trim() === "") return toast.warning("Please enter your email");
@@ -27,7 +27,7 @@ const Login = () => {
       });
       if (response.data.success) {
         toast.success(response.data.message);
-        setisOtpSent(true);
+        // setisOtpSent(true);
       }
     } catch (error) {
       console.log(error);
@@ -41,32 +41,32 @@ const Login = () => {
       }
     }
   };
-  const handleOtpVerify = async () => {
-    try {
-      if (email.trim() === "") return toast.warning("Please enter your email");
-      if (password.trim() === "")
-        return toast.warning("Please enter your password");
-      const response = await axios.post("/mfaverify", {
-        useremail: email,
-        userpassword: password,
-        code: otp,
-      });
-      if (response.data.success) {
-        toast.success("Welcome to Famebook!");
-        navigate("/profile");
-      }
-    } catch (error) {
-      console.log(error);
-      if (
-        error &&
-        error.response &&
-        error.response.data &&
-        error.response.data.error
-      ) {
-        toast.error(error.response.data.error);
-      }
-    }
-  };
+  // const handleOtpVerify = async () => {
+  //   try {
+  //     if (email.trim() === "") return toast.warning("Please enter your email");
+  //     if (password.trim() === "")
+  //       return toast.warning("Please enter your password");
+  //     const response = await axios.post("/mfaverify", {
+  //       useremail: email,
+  //       userpassword: password,
+  //       code: otp,
+  //     });
+  //     if (response.data.success) {
+  //       toast.success("Welcome to Famebook!");
+  //       navigate("/profile");
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     if (
+  //       error &&
+  //       error.response &&
+  //       error.response.data &&
+  //       error.response.data.error
+  //     ) {
+  //       toast.error(error.response.data.error);
+  //     }
+  //   }
+  // };
   return (
     <>
       <div
@@ -156,7 +156,7 @@ const Login = () => {
               />
             </Col>
           </Form.Group>
-          {isOtpSent ? (
+          {/* {isOtpSent ? (
             <>
               <div>
                 <label>Enter OTP sent on your phone number</label>
@@ -169,7 +169,7 @@ const Login = () => {
             </>
           ) : (
             <></>
-          )}
+          )} */}
 
           <Form.Group as={Row} className="mb-3">
             <Col sm={{ span: 10, offset: 2 }}>
@@ -181,11 +181,8 @@ const Login = () => {
                 }}
                 type="button"
                 onClick={() => {
-                  if (isOtpSent) {
-                    handleOtpVerify();
-                  } else {
-                    handleLogin();
-                  }
+                  handleLogin();
+                  navigate("/profile");
                 }}
               >
                 Login
