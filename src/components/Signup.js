@@ -37,7 +37,7 @@ const Signup = () => {
       console.log(response);
       if (response.data.success) {
         toast.success("Successfully Registerd");
-        navigate("/login");
+        navigate("/loginn");
       }
     } catch (error) {
       console.log(error);
@@ -171,7 +171,7 @@ const Signup = () => {
             <span class="text">Sign in</span>
           </button> */}
           <Button
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/loginn")}
             style={{ marginBottom: "50px" }}
             variant="outline-warning"
           >

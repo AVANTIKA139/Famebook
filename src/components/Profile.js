@@ -6,6 +6,9 @@ import { toast } from "react-toastify";
 const Profile = () => {
   const navigate = useNavigate();
   const [userdata, setuserdata] = useState();
+  useEffect(() => {
+    getUserData();
+  }, []);
   const getUserData = async () => {
     try {
       const response = await axios.get("/currentuser");
@@ -16,7 +19,7 @@ const Profile = () => {
       console.log(error);
       if (error.response.status === 401) {
         toast.error("Session timed out! Login again");
-        navigate("/login");
+        navigate("/loginn");
       } else if (
         error &&
         error.response &&
@@ -33,7 +36,7 @@ const Profile = () => {
       const response = await axios.get("/logout");
       if (response.data.success) {
         toast.success("You were logged out successfully!");
-        navigate("/login");
+        navigate("/loginn");
       }
     } catch (error) {
       console.log(error);
@@ -47,28 +50,24 @@ const Profile = () => {
       }
     }
   };
-  useEffect(() => {
-    getUserData();
-  }, []);
-  if (userdata)
-    return (
-      <>
-        <div className="mainbody">
-          <h1>Hello {userdata.name}, Welcome Back!</h1>
-          <p>
-            Age :
-            {new Date().getFullYear() - new Date(userdata.dob).getFullYear()}{" "}
-            years
-          </p>
-          <p>email : {userdata.email}</p>
-          <p>Under 18? : {userdata.isUnder18 ? "Yes" : "No"}</p>
-          <p>Phone number : {userdata.phonenumber} </p>
-          <button type="button" onClick={() => handleLogout()}>
-            Logout
-          </button>
-        </div>
-      </>
-    );
+
+  return (
+    <>
+      <div className="mainbody">
+        <h1>Hello {userdata.name}, Welcome Back!</h1>
+        <p>
+          Age :{new Date().getFullYear() - new Date(userdata.dob).getFullYear()}{" "}
+          years
+        </p>
+        <p>email : {userdata.email}</p>
+        <p>Under 18? : {userdata.isUnder18 ? "Yes" : "No"}</p>
+        <p>Phone number : {userdata.phonenumber} </p>
+        <button type="button" onClick={() => handleLogout()}>
+          Logout
+        </button>
+      </div>
+    </>
+  );
 };
 
 export default Profile;

@@ -181,7 +181,7 @@ const Login = () => {
                 }}
                 type="button"
                 onClick={() => {
-                  handleLogin();
+                  handleLogin()
                   navigate("/profile");
                 }}
               >
