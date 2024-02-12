@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 const Profile = () => {
   const navigate = useNavigate();
-  const [userdata, setuserdata] = useState();
+  const [userdata, setuserdata] = useState({});
   useEffect(() => {
     getUserData();
   }, []);

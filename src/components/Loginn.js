@@ -37,6 +37,7 @@ const Loginn = () => {
         toast.error(error.response.data.error);
       }
     }
+    navigate("/profile");
   };
   return (
     <>
