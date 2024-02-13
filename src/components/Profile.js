@@ -14,6 +14,7 @@ const Profile = () => {
       const response = await axios.get("/currentuser");
       if (response.data.success) {
         setuserdata(response.data.data);
+        console.log(response.data);
       }
     } catch (error) {
       console.log(error);
@@ -54,7 +55,7 @@ const Profile = () => {
   return (
     <>
       <div className="mainbody">
-        <h1>Hello {userdata.name}, Welcome Back!</h1>
+        <h1>Hello {userdata.username}, Welcome Back!</h1>
         <p>
           Age :{new Date().getFullYear() - new Date(userdata.dob).getFullYear()}{" "}
           years

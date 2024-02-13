@@ -42,6 +42,7 @@ const Loginn = () => {
   return (
     <>
       <ToastContainer />
+      <div className="main">
       <div className="wrapper">
         <form action="">
           <h1>Login</h1>
@@ -91,6 +92,7 @@ const Loginn = () => {
             </p>
           </div>
         </form>
+      </div>
       </div>
     </>
   );
