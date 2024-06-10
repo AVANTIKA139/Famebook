@@ -7,6 +7,8 @@ import Profile from "./components/Profile";
 import Signup from "./components/Signup";
 
 import NotFound from "./components/NotFound";
+import Aboutus from "./components/Aboutus";
+import Contactus from "./components/Contactus";
 
 const App = () => {
   return (
@@ -14,6 +16,9 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/" Component={Home} />
+          <Route path="/Aboutus" Component={Aboutus} />
+          <Route path="/Contactus" Component={Contactus} />
+
           <Route path="/loginn" Component={Loginn} />
           <Route path="/signup" Component={Signup} />
           <Route path="/profile" Component={Profile} />
